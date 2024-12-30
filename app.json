@@ -1,5 +1,6 @@
 {
   "expo": {
+    "jsEngine": "hermes",
     "name": "mySecondProject",
     "slug": "mySecondProject",
     "version": "1.0.0",

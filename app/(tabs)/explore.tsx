@@ -1,109 +1,103 @@
-import { StyleSheet, Image, Platform } from 'react-native';
+// app/tabs/explore.tsx
+import { Ionicons } from '@expo/vector-icons';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-
-export default function TabTwoScreen() {
+export default function TabExplore() {
+  const categories: { id: number; name: string; icon: 'barbell-outline' | 'heart-outline' | 'body-outline' | 'flash-outline' | 'fitness-outline' | 'shield-outline'; count: number; }[] = [
+    { id: 1, name: 'Strength Training', icon: 'barbell-outline', count: 45 },
+    { id: 2, name: 'Cardio', icon: 'heart-outline', count: 32 },
+    { id: 3, name: 'Yoga', icon: 'body-outline', count: 28 },
+    { id: 4, name: 'HIIT', icon: 'flash-outline', count: 15 },
+    { id: 5, name: 'Stretching', icon: 'fitness-outline', count: 20 },
+    { id: 6, name: 'Core', icon: 'shield-outline', count: 25 },
+  ];
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
+    <View style={exploreStyles.container}>
+      <Text style={exploreStyles.header}>Explore Workouts</Text>
+      
+      <View style={exploreStyles.searchContainer}>
+        <Ionicons name="search-outline" size={24} color="#666" />
+        <TextInput
+          style={exploreStyles.searchInput}
+          placeholder="Search workouts..."
+          placeholderTextColor="#666"
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Explore</ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image source={require('@/assets/images/react-logo.png')} style={{ alignSelf: 'center' }} />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Custom fonts">
-        <ThemedText>
-          Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText> to see how to load{' '}
-          <ThemedText style={{ fontFamily: 'SpaceMono' }}>
-            custom fonts such as this one.
-          </ThemedText>
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user's current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful <ThemedText type="defaultSemiBold">react-native-reanimated</ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
+      </View>
+
+      <Text style={exploreStyles.sectionTitle}>Categories</Text>
+      <View style={exploreStyles.categoriesGrid}>
+        {categories.map(category => (
+          <TouchableOpacity 
+            key={category.id} 
+            style={exploreStyles.categoryCard}
+          >
+            <Ionicons name={category.icon} size={32} color="#007AFF" />
+            <Text style={exploreStyles.categoryName}>{category.name}</Text>
+            <Text style={exploreStyles.categoryCount}>{category.count} workouts</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    </View>
   );
 }
 
-const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
+const exploreStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  titleContainer: {
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginVertical: 20,
+  },
+  searchContainer: {
     flexDirection: 'row',
-    gap: 8,
+    alignItems: 'center',
+    backgroundColor: '#f8f9fa',
+    padding: 10,
+    borderRadius: 8,
+    marginVertical: 10,
   },
+  searchInput: {
+    flex: 1,
+    marginLeft: 10,
+    fontSize: 16,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    marginVertical: 10,
+  },
+  categoriesGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  categoryCard: {
+    width: '45%',
+    backgroundColor: '#fff',
+    padding: 16,
+    borderRadius: 8,
+    margin: 5,
+    alignItems: 'center',
+  },
+  categoryName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    marginTop: 10,
+  },
+  categoryCount: {
+    fontSize: 14,
+    color: '#666',
+    marginTop: 5,
+  },
+  
 });
