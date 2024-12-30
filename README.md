@@ -1,4 +1,4 @@
-# My Second Project
+# Sport and Fitness Mobile App
 
 ## Overview
 
